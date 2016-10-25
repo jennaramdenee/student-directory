@@ -13,6 +13,31 @@
 #   {name: "Norman Bates", cohort: :november}
 # ]
 
+def interactive_menu
+  students = []
+  loop do
+    # show user list of options and ask for user input
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    # read user input and save to a variable
+    selection = gets.chomp
+    # execute action
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
+end
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -25,7 +50,12 @@ def print(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  if students.count == 1
+    student_char = "student"
+  else
+    student_char = "students"
+  end
+  puts "Overall, we have #{students.count} great #{student_char}"
 end
 
 def input_students
@@ -39,7 +69,12 @@ def input_students
   while !name.empty? do
     #add student hash to the array
     students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    if students.count == 1
+      student_char = "student"
+    else
+      student_char = "students"
+    end
+    puts "Now we have #{students.count} #{student_char}"
     #get another name from the user
     name = gets.chomp
   end
@@ -47,7 +82,4 @@ def input_students
   students
 end
 
-students = input_students
-print_header
-print(students)
-print_footer(students)
+interactive_menu
