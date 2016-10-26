@@ -15,10 +15,21 @@
 
 @students = []
 
+def try_load_students(filename = "students.csv")
+  filename = ARGV.first #first element from ARGV array
+  return if filename.nil?
+  if File.exist?(filename)
+    load_students
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} does not exist"
+  end
+end
+
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -52,7 +63,7 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #get first name
-  name = gets.chomp
+  name = STDIN.gets.chomp
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add student hash to the array
